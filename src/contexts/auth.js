@@ -18,6 +18,12 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const isValidEmail = email => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+  
+
   const signin = (email, password) => {
     const usersStorage = JSON.parse(localStorage.getItem("users_db"));
 
@@ -41,6 +47,10 @@ export const AuthProvider = ({ children }) => {
     const usersStorage = JSON.parse(localStorage.getItem("users_db"));
 
     const hasUser = usersStorage?.filter((user) => user.email === email);
+
+    if (!isValidEmail(email)) {
+      return "Digite um email válido";
+    }
 
     if (hasUser?.length) {
       return "Já existe uma conta cadastrada com esse e-mail";
