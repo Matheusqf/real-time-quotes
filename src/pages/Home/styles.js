@@ -12,12 +12,3 @@ export const Title = styled.h1`
   background-color: #0a64a6;
   color: #fff;
 `;
-
-export const Subtitle = styled.h2`
-  text-align: center;
-  padding: 30px 0 10px;
-`;
-
-export const AllCards = styled.div`
-  padding-bottom: 10px;
-`;
