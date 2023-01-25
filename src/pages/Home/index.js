@@ -17,14 +17,14 @@ const Home = () => {
   const [quotes, setQuotes] = useState({});
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const sourceCurrency = quotes.currencies.source;
+  const sourceCurrency = quotes?.currencies?.source;
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "https://cors-anywhere.herokuapp.com/https://api.hgbrasil.com/finance"
+          "https://cors-anywhere.herokuapp.com/https://api.hgbrasil.com/finance?key=0194da82"
         );
         setQuotes(response.data.results);
       } catch (error) {
@@ -46,14 +46,12 @@ const Home = () => {
     quotes?.currencies &&
     Object.entries(quotes?.currencies)
       .filter(([key, currency]) => key !== "source" && currency.name)
-      // .slice(0, 5)
       .map(([key, currency]) => ({ ...currency, code: key }));
 
   const stocks =
     quotes?.stocks &&
     Object.entries(quotes.stocks)
       .filter(([key, stock]) => key !== "source" && stock.name)
-      // .slice(0, 5)
       .map(([key, stock]) => ({ ...stock, code: key }));
 
   const handleSignOut = () => [signout(), navigate("/")];
@@ -63,6 +61,7 @@ const Home = () => {
       <C.Title>Cotações de hoje</C.Title>
       <InactivityAlert />
       <C.AllCards>
+
         <C.Subtitle>Moedas / {sourceCurrency}</C.Subtitle>
         <div className="wrapper">
           {currencies?.map((quote) => (
@@ -76,6 +75,7 @@ const Home = () => {
             <Card key={quote.code} quote={quote} />
           ))}
         </div>
+
       </C.AllCards>
 
       <Button Text="Sair" onClick={handleSignOut}>
