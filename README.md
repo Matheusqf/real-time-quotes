@@ -20,6 +20,8 @@ Para instalar este projeto, siga os seguintes passos:
 - Responsividade
 - Utilizar Rotas adequadamente (e de acordo com a autenticação)
 - Redirecionar para uma página de "Not found" caso a rota esteja errada
+- Atualizei o projeto para refazer a requisicao à API a cada 40 segundos e armazenar os valores
+- Os valores armazenados sāo exibidos em um simples gráfico
 
 ## Utilização de Proptypes
 
