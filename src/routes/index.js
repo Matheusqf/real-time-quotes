@@ -15,14 +15,12 @@ const Private = ({ Item }) => {
 const RoutesApp = () => {
   return (
     <BrowserRouter>
-      <>
         <Routes>
             <Route exact path="/home" element={<Private Item={Home} />}></Route>
             <Route exact path="/" element={<Signin />}></Route>
             <Route exact path="/signup" element={<Signup />}></Route>
             <Route exact path="/*" element={<NotFound />}></Route>
         </Routes>
-      </>
     </BrowserRouter>
   );
 };

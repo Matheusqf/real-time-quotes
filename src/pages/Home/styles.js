@@ -13,11 +13,18 @@ export const Title = styled.h1`
   color: #fff;
 `;
 
-export const Subtitle = styled.h2`
+export const Dialog = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #ccc;
   text-align: center;
-  padding: 30px 0 10px;
-`;
 
-export const AllCards = styled.div`
-  padding-bottom: 10px;
+  @media screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
