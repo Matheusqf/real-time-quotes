@@ -1,8 +1,30 @@
 
 import { StyledCard } from "./styles";
+import styled from 'styled-components';
+import { useState } from "react";
+import Button from "../Button";
+import { H1 } from "../../styles/_shared";
+import Chart from "../Chart";
+
+const Dialog = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #ccc;
+`;
 
 function Card({ quote }) {
+  const [showDialog, setShowDialog] = useState(false);
+
   const isCurrency = !!quote.buy;
+
+  const handleOpenDialog = () => {
+    setShowDialog(true);
+  };
 
   return (
     <StyledCard>
@@ -35,7 +57,14 @@ function Card({ quote }) {
             </h5>
           </div>
         </div>
-        <button className="dashboard-card__btn">Ver Gráfico</button>
+        <button className="dashboard-card__btn" onClick={handleOpenDialog}>Ver Gráfico</button>
+      {showDialog && (
+        <Dialog>
+          <H1>GRÁFICO COM EVOLUÇÃO DOS PREÇOS</H1>
+          <Chart quoteCode={quote.code}></Chart>
+          <Button onClick={() => setShowDialog(false)} Text="Close"></Button>
+        </Dialog>
+      )}
       </div>
     </StyledCard>
   );
