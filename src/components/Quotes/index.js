@@ -3,9 +3,9 @@ import axios from "axios";
 import * as C from "./styles";
 import Card from "../../components/Card";
 import { H1 } from "../../styles/_shared";
+import useAuth from "../../hooks/useAuth";
 
-
-const Quotes = () => {
+const Quotes = ({ onClickOpenChart }) => {
   const currencyHistory = JSON.parse(
     sessionStorage.getItem("currency_history") || "[]"
   );
@@ -16,19 +16,24 @@ const Quotes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const sourceCurrency = quotes?.currencies?.source;
 
+  const { isUserActive } = useAuth();
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          "https://api.hgbrasil.com/finance?key=fb33dfa4&format=json-cors"
-        );
-        setQuotes(response.data.results);
+        if (isUserActive) {
+            console.log("debugger isUserActive: ", isUserActive)
+          const response = await axios.get(
+            "https://api.hgbrasil.com/finance?key=fb33dfa4&format=json-cors"
+          );
+          setQuotes(response.data.results);
 
-        sessionStorage.setItem(
-          "currency_history",
-          JSON.stringify([...currencyHistory, response.data.results])
-        );
+          sessionStorage.setItem(
+            "currency_history",
+            JSON.stringify([...currencyHistory, response.data.results])
+          );
+        }
       } catch (error) {
         setError(error);
       }
@@ -39,17 +44,20 @@ const Quotes = () => {
     fetchData();
 
     //Fetch data every 40 seconds
-    const intervalId = setInterval(fetchData, 8000);
+    const intervalId = setInterval(fetchData, 6000);
+
+    // clearInterval(intervalId);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [isUserActive]);
 
   if (error) {
     return <H1>{error.message}</H1>;
   }
-  if (isLoading) {
-    return <H1>Loading...</H1>;
-  }
+
+  //TODO:
+  // n ta fazendo push direito
+  // parar de fazer req qndo tiver inativo (diago de inativo)
 
   const currencies =
     quotes?.currencies &&
@@ -64,21 +72,36 @@ const Quotes = () => {
       .map(([key, stock]) => ({ ...stock, code: key }));
 
   return (
-    <C.AllCards>
-      <C.Subtitle>Moedas / {sourceCurrency}</C.Subtitle>
-      <div className="wrapper">
-        {currencies?.map((quote) => (
-          <Card key={quote.code} quote={quote} />
-        ))}
-      </div>
+    <>
+      {isLoading && (
+        <C.Overlay>
+          <C.Spinner />
+        </C.Overlay>
+      )}
+      <C.AllCards>
+        <C.Subtitle>Moedas / {sourceCurrency}</C.Subtitle>
+        <div className="wrapper">
+          {currencies?.map((quote) => (
+            <Card
+              key={quote.code}
+              quote={quote}
+              onClickOpenChart={onClickOpenChart}
+            />
+          ))}
+        </div>
 
-      <C.Subtitle>Ações</C.Subtitle>
-      <div className="wrapper">
-        {stocks?.map((quote) => (
-          <Card key={quote.code} quote={quote} />
-        ))}
-      </div>
-    </C.AllCards>
+        <C.Subtitle>Ações</C.Subtitle>
+        <div className="wrapper">
+          {stocks?.map((quote) => (
+            <Card
+              key={quote.code}
+              quote={quote}
+              onClickOpenChart={onClickOpenChart}
+            />
+          ))}
+        </div>
+      </C.AllCards>
+    </>
   );
 };
 

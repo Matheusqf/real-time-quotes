@@ -7,13 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Signup = () => {
+  const { signup, isAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [emailConf, setEmailConf] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { signup, isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -29,9 +28,7 @@ const Signup = () => {
       setError("Os emails nāo sāo iguais");
       return;
     }
-    setIsLoading(true);
     const res = signup(email, password);
-    setIsLoading(false);
 
     if (res) {
       setError(res);
@@ -43,10 +40,10 @@ const Signup = () => {
   };
 
   const handleInputKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSignup();
     }
-  }
+  };
 
   return (
     <C.Container>
@@ -77,7 +74,6 @@ const Signup = () => {
         <Button
           Text="Increver-se"
           onClick={handleSignup}
-          isLoading={isLoading}
         />
         <C.LabelSignup>
           Já tem uma conta?
@@ -96,10 +92,8 @@ Signup.propTypes = {
   emailConf: PropTypes.string,
   password: PropTypes.string,
   error: PropTypes.string,
-  isLoading: PropTypes.bool,
   handleSignup: PropTypes.func,
   handleInputKeyDown: PropTypes.func,
-}
-
+};
 
 export default Signup;

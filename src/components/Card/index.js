@@ -1,34 +1,9 @@
 
 import { StyledCard } from "./styles";
-import styled from 'styled-components';
-import { useState } from "react";
-import Button from "../Button";
-import { H1 } from "../../styles/_shared";
-import Chart from "../Chart";
 
-const Dialog = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px #ccc;
-
-  @media screen and (max-width: 600px) {
-    width: 90%;
-  }
-`;
-
-function Card({ quote }) {
-  const [showDialog, setShowDialog] = useState(false);
+function Card({ quote, onClickOpenChart }) {
 
   const isCurrency = !!quote.buy;
-
-  const handleOpenDialog = () => {
-    setShowDialog(true);
-  };
 
   return (
     <StyledCard>
@@ -61,14 +36,8 @@ function Card({ quote }) {
             </h5>
           </div>
         </div>
-        <button className="dashboard-card__btn" onClick={handleOpenDialog}>Ver Gráfico</button>
-      {showDialog && (
-        <Dialog>
-          <H1>GRÁFICO COM EVOLUÇÃO DOS VALORES</H1>
-          <Chart quoteCode={quote.code}></Chart>
-          <Button onClick={() => setShowDialog(false)} Text="Close"></Button>
-        </Dialog>
-      )}
+        {/* <button className="dashboard-card__btn" onClick={handleOpenDialog}>Ver Gráfico</button> */}
+        <button className="dashboard-card__btn" onClick={() => onClickOpenChart(quote.code)}>Ver Gráfico</button>
       </div>
     </StyledCard>
   );
