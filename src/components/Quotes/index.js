@@ -24,7 +24,7 @@ const Quotes = ({ onClickOpenChart }) => {
       try {
         if (isUserActive) {
           const response = await axios.get(
-            "https://api.hgbrasil.com/finance?key=fb33dfa4&format=json-cors"
+            "https://api.hgbrasil.com/finance?key=32d8f785&format=json-cors"
           );
           setQuotes(response.data.results);
 
