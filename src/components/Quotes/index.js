@@ -23,7 +23,6 @@ const Quotes = ({ onClickOpenChart }) => {
       setIsLoading(true);
       try {
         if (isUserActive) {
-            console.log("debugger isUserActive: ", isUserActive)
           const response = await axios.get(
             "https://api.hgbrasil.com/finance?key=fb33dfa4&format=json-cors"
           );
@@ -54,10 +53,6 @@ const Quotes = ({ onClickOpenChart }) => {
   if (error) {
     return <H1>{error.message}</H1>;
   }
-
-  //TODO:
-  // n ta fazendo push direito
-  // parar de fazer req qndo tiver inativo (diago de inativo)
 
   const currencies =
     quotes?.currencies &&
