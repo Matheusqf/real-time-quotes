@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
           // Set user inactive after 1 minute without movement
           setIsUserActive(false);
         }
-      }, 10 * 1000);
+      }, 60 * 1000);
     }
 
     resetTimeout();

@@ -44,7 +44,7 @@ const Quotes = ({ onClickOpenChart }) => {
     fetchData();
 
     //Fetch data every 40 seconds
-    const intervalId = setInterval(fetchData, 6000);
+    const intervalId = setInterval(fetchData, 40000);
 
     // clearInterval(intervalId);
 
