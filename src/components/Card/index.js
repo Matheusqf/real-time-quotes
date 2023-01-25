@@ -15,6 +15,10 @@ const Dialog = styled.div`
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px #ccc;
+
+  @media screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 function Card({ quote }) {
@@ -60,7 +64,7 @@ function Card({ quote }) {
         <button className="dashboard-card__btn" onClick={handleOpenDialog}>Ver Gráfico</button>
       {showDialog && (
         <Dialog>
-          <H1>GRÁFICO COM EVOLUÇÃO DOS PREÇOS</H1>
+          <H1>GRÁFICO COM EVOLUÇÃO DOS VALORES</H1>
           <Chart quoteCode={quote.code}></Chart>
           <Button onClick={() => setShowDialog(false)} Text="Close"></Button>
         </Dialog>
