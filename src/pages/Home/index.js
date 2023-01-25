@@ -41,10 +41,11 @@ const Home = () => {
      setIsLoading(false);
    };
 
-   // Fetch data immediately on first load
+
+   //Fetch data immediately on first load
    fetchData();
 
-   // Fetch data every 40 seconds
+   //Fetch data every 40 seconds
    const intervalId = setInterval(fetchData, 40000);
 
    return () => clearInterval(intervalId);
