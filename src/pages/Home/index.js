@@ -26,7 +26,11 @@ const Home = () => {
      setIsLoading(true);
      try {
        const response = await axios.get(
-         "https://cors-anywhere.herokuapp.com/https://api.hgbrasil.com/finance?key=32d8f785"
+         "https://api.hgbrasil.com/finance?", {
+             params: {
+              key: "32d8f785"
+             }
+          }
        );
        setQuotes(response.data.results);
        
@@ -37,10 +41,10 @@ const Home = () => {
      setIsLoading(false);
    };
 
-   //Fetch data immediately on first load
+   // Fetch data immediately on first load
    fetchData();
 
-   //Fetch data every 40 seconds
+   // Fetch data every 40 seconds
    const intervalId = setInterval(fetchData, 40000);
 
    return () => clearInterval(intervalId);
