@@ -8,6 +8,7 @@ import Chart from "../../components/Chart";
 import Button from "../../components/Button";
 import Quotes from "../../components/Quotes";
 import InactivityAlert from "../../components/InactivityAlert/InactivityAlert";
+import Search from "../../components/Search";
 
 const Home = () => {
   const { signout } = useAuth();
@@ -22,6 +23,7 @@ const Home = () => {
     <>
       <C.Container>
         <C.Title>Cotações de hoje</C.Title>
+        <Search />
         <InactivityAlert />
         <Quotes onClickOpenChart={quoteCode => {
           setShowDialog(true);
